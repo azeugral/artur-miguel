@@ -11,19 +11,20 @@
 <link rel="apple-touch-icon" href="assets/icon-180.png">
 <meta property="og:title" content="Artur Miguel · Tatuador">
 <meta property="og:description" content="A tua ideia, a minha arte. Realismo a preto e cinza em Belas, Sintra.">
-<meta property="og:image" content="https://azeugral.github.io/artur-miguel/assets/img/h/miguel.webp">
+<meta property="og:image" content="https://azeugral.github.io/artur-miguel/assets/og.jpg?v=2">
 <meta property="og:url" content="https://azeugral.github.io/artur-miguel/">
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/grenze.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/caveat.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="assets/fonts/hanken.woff2" crossorigin>
-<link rel="preload" as="image" href="assets/img/h/miguel-e.webp">
-<link rel="preload" as="image" href="assets/img/h/miguel.webp">
-<link rel="stylesheet" href="assets/site.css?v=1">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/caveat.woff2" crossorigin>
+<link rel="preload" as="image" href="assets/hero/miguel.webp">
+<link rel="preload" as="image" href="assets/hero/fluxo.webp">
+<link rel="preload" as="image" href="assets/logo-am.svg">
+<link rel="stylesheet" href="assets/site.css?v=2">
 </head>
 <body>
 <header class="topo">
   <nav class="menu menu-e" aria-label="Secções"><a href="#trabalhos">Trabalhos</a><a href="#homenagens">Homenagens</a><a href="#artur">O Artur</a></nav>
-  <a class="marca" href="#inicio" aria-label="Artur Miguel, início"><img src="assets/logo.svg" alt="Artur Miguel" width="1255" height="1333"></a>
+  <a class="marca" href="#inicio" aria-label="Artur Miguel, início"><img src="assets/logo-am.svg" alt="Artur Miguel, Tattoo Artist" width="2213" height="2210"></a>
   <nav class="menu menu-d" aria-label="Contacto"><a href="https://www.instagram.com/arturmigueltattoos/" target="_blank" rel="noopener">Instagram</a><a class="mc" href="#marcar">Pedir orçamento</a></nav>
   <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
 </header>
@@ -34,23 +35,20 @@
 <main>
 <section class="hero" id="inicio">
   <h1 class="sr">Artur Miguel, tatuador em Belas, Sintra e Lisboa. A tua ideia, a minha arte.</h1>
-  <img class="orn orn-e" src="assets/img/traco.webp" alt="" width="1104" height="2090" aria-hidden="true">
-  <img class="orn orn-d" src="assets/img/traco.webp" alt="" width="1104" height="2090" aria-hidden="true">
   <div class="palco">
-    <img class="nm nm-a" src="assets/logo-artur.svg" alt="" width="1255" height="743" aria-hidden="true">
-    <img class="nm-m" src="assets/logo.svg" alt="" width="1255" height="1333" aria-hidden="true">
-    <div class="folha" id="folha" role="img" aria-label="Folha de orçamento: a ideia escrita à mão passa a esboço e depois a tatuagem feita pelo Artur">
-      <p class="f-rot"><span>A tua ideia</span></p>
-      <p class="f-ideia" id="fIdeia">São Miguel Arcanjo, força e proteção.</p>
-      <div class="f-jan">
-        <img class="f-esb" id="fEsb" src="assets/img/h/miguel-e.webp" alt="" width="960" height="1200">
-        <img class="f-pele" id="fPele" src="assets/img/h/miguel.webp" alt="" width="960" height="1200">
+    <div class="lado lado-e"><p class="nome">Artur</p><p class="lado-t"><strong>Tatuador</strong>Realismo a preto e cinza</p></div>
+    <figure class="quadro">
+      <div class="folha" id="folha" role="img" aria-label="São Miguel Arcanjo tatuado pelo Artur, do estêncil ao sombreado a preto e cinza">
+        <canvas id="sombra" aria-hidden="true"></canvas>
+        <video id="sombraV" muted playsinline preload="auto" aria-hidden="true" hidden></video>
+        <img class="f-fim" id="fFim" src="assets/hero/miguel-final.webp" alt="" width="960" height="1200" aria-hidden="true">
+        <img class="selo" src="assets/logo-am-verm.svg" alt="" width="2213" height="2210" aria-hidden="true">
       </div>
-      <p class="f-rot f-rot2"><span>a minha arte</span><b id="fNome">São Miguel · braço</b></p>
-    </div>
-    <img class="nm nm-b" src="assets/logo-miguel.svg" alt="" width="1219" height="647" aria-hidden="true">
+      <figcaption>São Miguel Arcanjo · braço</figcaption>
+    </figure>
+    <div class="lado lado-d"><p class="nome">Miguel</p><p class="lado-t"><strong>Belas, Sintra</strong>Sessões por marcação</p></div>
   </div>
-  <p class="h-sub">Tatuador em Belas, Sintra<span class="h-sub2"> · Realismo a preto e cinza</span></p>
+  <p class="h-mote">A tua ideia, a minha arte.</p>
   <div class="bts"><a class="bt bt-v" href="#marcar">Pedir orçamento</a><a class="bt bt-l" href="#trabalhos">Ver trabalhos</a></div>
 </section>
 
@@ -74,8 +72,6 @@
 </section>
 
 <section class="sec homenagens" id="homenagens">
-  <img class="orn-s os-e" src="assets/img/traco.webp" alt="" width="1104" height="2090" aria-hidden="true">
-  <img class="orn-s os-d" src="assets/img/traco.webp" alt="" width="1104" height="2090" aria-hidden="true">
   <h2>Amor que não se apaga</h2>
   <p class="lead">Retratos de cães a preto e cinza, com o nome escrito à mão. É dos trabalhos que o Artur mais faz.</p>
   <div class="hm-grid">
@@ -146,7 +142,7 @@
 </main>
 
 <footer class="rodape">
-  <img class="r-logo" src="assets/logo.svg" alt="Artur Miguel" width="1255" height="1333">
+  <img class="r-logo" src="assets/logo-am.svg" alt="Artur Miguel, Tattoo Artist" width="2213" height="2210">
   <p>Tattoo artist · Belas, Sintra · <a href="https://www.instagram.com/arturmigueltattoos/" target="_blank" rel="noopener">Instagram</a></p>
   <p class="ass">Site por <a href="https://lrgz.com.br" target="_blank" rel="noopener">L R G Z</a></p>
 </footer>
@@ -157,7 +153,8 @@
   <figure><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
   <button class="lb-n lb-s" id="lbS" aria-label="Seguinte">›</button>
 </div>
-<script src="assets/pecas.js?v=1"></script>
-<script src="assets/main.js?v=1"></script>
+<script src="assets/pecas.js?v=2"></script>
+<script src="assets/sombreado.js?v=2"></script>
+<script src="assets/main.js?v=2"></script>
 </body>
 </html>

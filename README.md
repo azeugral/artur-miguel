@@ -2,12 +2,11 @@
 
 Prévia do site do tatuador **Artur Miguel** ([@arturmigueltattoos](https://www.instagram.com/arturmigueltattoos/)), Belas · Sintra · Lisboa. PT-PT.
 
-**Conceito:** "⚜️ A tua ideia, a minha arte." (bio dele). O hero é uma folha de orçamento: a ideia do cliente escrita à mão vira esboço a grafite e depois a pele tatuada. O nome dele, na própria logo gótica, dos dois lados da folha.
+**Conceito:** "⚜️ A tua ideia, a minha arte." (bio dele). O hero é o São Miguel Arcanjo dele numa folha de papel: o estêncil violeta aparece e a agulha enche a peça a preto e cinza (escuros primeiro, passadas que seguem a forma), fechada em 1,6 s, com o selo AM a vermelho no fim. "Artur" e "Miguel" dos dois lados, no eixo. Shader em `assets/sombreado.js` (texturas em `assets/hero/`, geradas por `tools/heroarte.py` e `tools/hero_tex.py`); no toque, `assets/hero/sombreado.mp4` (`tools/gravar.py`, precisa do servidor na 8951).
 
-- Logo: marca d'água dele vetorizada (`assets/logo.svg`, `logo-artur.svg`, `logo-miguel.svg`).
+- Logo: a oficial dele (AM com louros, TATTOO ARTIST), vetorizada da foto de perfil (`assets/logo-am.svg`, selo `logo-am-verm.svg`; `tools/logo_am.py`).
 - Fontes: Grenze Gotisch (títulos), Hanken Grotesk (texto), Caveat (escrita à mão). Self-hosted.
 - Paleta: tinta #121110, papel #ECE6DA, vermelho #B4231B.
-- Ornamento: asas, espada e serpente tiradas de uma tatuagem dele.
 
 ## CONFIRMAR com o Artur
 - [ ] WhatsApp **960 300 746** (aparece em legendas de 2019; o site manda o orçamento para lá).

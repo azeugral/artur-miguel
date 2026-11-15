@@ -1,30 +1,29 @@
-// HERO: a ideia escrita na folha vira esboço e depois pele
+// HERO: o estêncil do São Miguel aparece e a agulha enche a peça (shader no PC, MP4 no toque)
 (function(){
-  const H=[
-    ['miguel','São Miguel Arcanjo, força e proteção.','São Miguel · braço'],
-    ['lola','A minha Lola, para sempre comigo.','Lola · antebraço'],
-    ['senna','Ayrton Senna, o capacete e o carro.','Senna · perna'],
-    ['leoa','Leoa com a cria. Força e legado.','Leoa e cria · braço'],
-    ['catrina','Uma Catrina entre flores.','Catrina · braço'],
-    ['lobo','O lobo defende o que ama.','Lobo · perna']];
-  const f=document.getElementById('folha'),ide=document.getElementById('fIdeia'),esb=document.getElementById('fEsb'),pel=document.getElementById('fPele'),nom=document.getElementById('fNome');
-  const src=(n,e)=>'assets/img/h/'+n+(e?'-e':'')+'.webp';
-  H.forEach(([n])=>{[0,1].forEach(e=>{const i=new Image();i.src=src(n,e)})});
+  const f=document.getElementById('folha'),cv=document.getElementById('sombra'),vd=document.getElementById('sombraV');
   const reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let k=0,t=null;
-  function mostra(i){const [n,txt,nm]=H[i];
-    f.classList.remove('go','sai');ide.textContent=txt;nom.textContent=nm;esb.src=src(n,1);pel.src=src(n,0);
-    void f.offsetWidth;
-    const go=()=>f.classList.add('go');
-    Promise.all([esb,pel].map(im=>im.decode?im.decode().catch(()=>{}):0)).then(go)}
-  function ciclo(){f.classList.add('sai');setTimeout(()=>{k=(k+1)%H.length;mostra(k)},380)}
-  function liga(){if(!t&&!reduz)t=setInterval(ciclo,5000)}
-  function desliga(){clearInterval(t);t=null}
-  mostra(0);
-  if(reduz){f.classList.add('go');return}
-  liga();
-  new IntersectionObserver(e=>e[0].isIntersecting?liga():desliga()).observe(f);
-  document.addEventListener('visibilitychange',()=>document.hidden?desliga():liga());
+  const estatica=()=>{f.classList.add('estatica');cv.hidden=true;vd.hidden=true};
+  if(reduz){estatica();return}
+  const carrega=src=>new Promise((ok,er)=>{const i=new Image();i.decoding='async';i.onload=()=>ok(i);i.onerror=er;i.src=src});
+  function shader(){
+    const api=window.sombreadoHero&&window.sombreadoHero(cv);
+    if(!api||!api.ok){estatica();return}
+    vd.hidden=true;cv.hidden=false;
+    Promise.all([carrega('assets/hero/miguel.webp'),carrega('assets/hero/fluxo.webp')]).then(([a,b])=>{
+      api.carregar(a,b);const D=window.sombreadoDur;let t0=null;
+      function passo(ts){if(t0===null)t0=ts;const t=Math.min((ts-t0)/1000,D);api.quadro(t);
+        if(t>1.8)f.classList.add('fim');if(t<D)requestAnimationFrame(passo)}
+      requestAnimationFrame(passo);
+      let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>api.quadro(D),60)});
+    }).catch(estatica);
+  }
+  if(matchMedia('(hover: none)').matches){
+    cv.hidden=true;vd.hidden=false;vd.src='assets/hero/sombreado.mp4?v=2';
+    vd.addEventListener('timeupdate',()=>{if(vd.currentTime>1.8)f.classList.add('fim')});
+    vd.addEventListener('ended',()=>f.classList.add('fim'));
+    vd.addEventListener('error',shader,{once:true});
+    const p=vd.play();if(p)p.catch(()=>{vd.hidden=true;shader()});
+  }else shader();
 })();
 
 // TRABALHOS
