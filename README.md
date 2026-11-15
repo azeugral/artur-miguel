@@ -2,7 +2,7 @@
 
 Prévia do site do tatuador **Artur Miguel** ([@arturmigueltattoos](https://www.instagram.com/arturmigueltattoos/)), Belas · Sintra · Lisboa. PT-PT.
 
-**Conceito:** "⚜️ A tua ideia, a minha arte." (bio dele). O hero é o São Miguel Arcanjo dele numa folha de papel: o estêncil violeta aparece e a agulha enche a peça a preto e cinza (escuros primeiro, passadas que seguem a forma), fechada em 1,6 s, com o selo AM a vermelho no fim. "Artur" e "Miguel" dos dois lados, no eixo. Shader em `assets/sombreado.js` (texturas em `assets/hero/`, geradas por `tools/heroarte.py` e `tools/hero_tex.py`); no toque, `assets/hero/sombreado.mp4` (`tools/gravar.py`, precisa do servidor na 8951).
+**Conceito:** "⚜️ A tua ideia, a minha arte." (bio dele). O hero passa 5 peças dele (São Miguel, Leoa e cria, Catrina, Lobo, Senna; ciclo de 5,6 s) numa folha de papel, arte encostada no topo e na base da moldura: o estêncil violeta aparece e a agulha enche a peça a preto e cinza (escuros primeiro, passadas que seguem a forma), fechada em 1,6 s, com o selo AM a vermelho no fim. "Artur" e "Miguel" dos dois lados, no eixo. Shader em `assets/sombreado.js` (texturas em `assets/hero/`, geradas por `tools/heroarte.py` e `tools/hero_tex.py`); nas laterais, folhas de decalque presas com fita (`*-decalque.webp`, só a partir de 1200 px); no toque, `assets/hero/sombreado.mp4` (ciclo inteiro, 28 s em laço) (`tools/gravar.py`, precisa do servidor na 8951).
 
 - Logo: a oficial dele (AM com louros, TATTOO ARTIST), vetorizada da foto de perfil (`assets/logo-am.svg`, selo `logo-am-verm.svg`; `tools/logo_am.py`).
 - Fontes: Grenze Gotisch (títulos), Hanken Grotesk (texto), Caveat (escrita à mão). Self-hosted.

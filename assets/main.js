@@ -1,26 +1,35 @@
-// HERO: o estêncil do São Miguel aparece e a agulha enche a peça (shader no PC, MP4 no toque)
+// HERO: o estêncil aparece e a agulha enche a peça; 5 peças em ciclo (shader no PC, MP4 no toque)
 (function(){
-  const f=document.getElementById('folha'),cv=document.getElementById('sombra'),vd=document.getElementById('sombraV');
+  const f=document.getElementById('folha'),cv=document.getElementById('sombra'),vd=document.getElementById('sombraV'),cap=document.getElementById('fCap');
+  const PS=window.sombreadoPecas,C=window.sombreadoCiclo;
   const reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const estatica=()=>{f.classList.add('estatica');cv.hidden=true;vd.hidden=true};
+  let atual=-1;
+  function mostra(e){f.classList.toggle('fim',e.fim);if(e.i!==atual){atual=e.i;cap.textContent=PS[e.i][1];f.setAttribute('aria-label',PS[e.i][1].split(' · ')[0]+' tatuado pelo Artur, do estêncil ao sombreado')}}
   if(reduz){estatica();return}
   const carrega=src=>new Promise((ok,er)=>{const i=new Image();i.decoding='async';i.onload=()=>ok(i);i.onerror=er;i.src=src});
   function shader(){
     const api=window.sombreadoHero&&window.sombreadoHero(cv);
     if(!api||!api.ok){estatica();return}
     vd.hidden=true;cv.hidden=false;
-    Promise.all([carrega('assets/hero/miguel.webp'),carrega('assets/hero/fluxo.webp')]).then(([a,b])=>{
-      api.carregar(a,b);const D=window.sombreadoDur;let t0=null;
-      function passo(ts){if(t0===null)t0=ts;const t=Math.min((ts-t0)/1000,D);api.quadro(t);
-        if(t>1.8)f.classList.add('fim');if(t<D)requestAnimationFrame(passo)}
+    const cargas=PS.map(([n],i)=>Promise.all([carrega('assets/hero/'+n+'.webp?v=3'),carrega('assets/hero/'+n+'-fluxo.webp?v=3')]).then(([a,b])=>api.carregar(i,a,b)));
+    cargas[0].then(()=>{
+      let T=0,ult=null,vis=true;
+      new IntersectionObserver(es=>vis=es[0].isIntersecting).observe(f);
+      function passo(ts){
+        const dt=ult===null?0:Math.min((ts-ult)/1000,.1);ult=ts;
+        if(vis&&!document.hidden){
+          let e=window.sombreadoEm(T+dt);
+          if(!api.pronta(e.i)){e=window.sombreadoEm(T);} else T+=dt;   /* espera a próxima peça carregar */
+          api.quadro(e.t,e.i,e.al);mostra(e);
+        }
+        requestAnimationFrame(passo)}
       requestAnimationFrame(passo);
-      let rz;addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>api.quadro(D),60)});
     }).catch(estatica);
   }
   if(matchMedia('(hover: none)').matches){
-    cv.hidden=true;vd.hidden=false;vd.src='assets/hero/sombreado.mp4?v=2';
-    vd.addEventListener('timeupdate',()=>{if(vd.currentTime>1.8)f.classList.add('fim')});
-    vd.addEventListener('ended',()=>f.classList.add('fim'));
+    cv.hidden=true;vd.hidden=false;vd.loop=true;vd.src='assets/hero/sombreado.mp4?v=3';
+    vd.addEventListener('timeupdate',()=>mostra(window.sombreadoEm(vd.currentTime)));
     vd.addEventListener('error',shader,{once:true});
     const p=vd.play();if(p)p.catch(()=>{vd.hidden=true;shader()});
   }else shader();

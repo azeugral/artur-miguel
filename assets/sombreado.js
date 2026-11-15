@@ -8,7 +8,7 @@
   const FS = `#version 300 es
   precision highp float;
   in vec2 uv; out vec4 o;
-  uniform sampler2D uT, uF; uniform float uTm; uniform vec2 uRes;
+  uniform sampler2D uT, uF; uniform float uTm, uAl; uniform vec2 uRes;
   float h(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
   float vn(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f);
     return mix(mix(h(i),h(i+vec2(1,0)),f.x),mix(h(i+vec2(0,1)),h(i+1.),f.x),f.y); }
@@ -41,7 +41,7 @@
     float a = clamp(ink + est*.85*(1.-ink), 0., 1.);
     vec3 col = (tinta*ink + viol*est*.85*(1.-ink));
     col += vec3(.05)*br*ink;
-    o = vec4(col, a);
+    o = vec4(col, a)*uAl;
   }`;
   function sh(gl, t, s) { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) throw gl.getShaderInfoLog(o); return o; }
   window.sombreadoHero = function (cv) {
@@ -69,12 +69,15 @@
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
       return t;
     }
-    let T = null, F = null;
+    const PS = [];
     return {
       ok: true,
-      carregar(imT, imF) { T = tex(imT, true); F = tex(imF, false); },
-      quadro(t) {
-        if (!T) return;
+      /* i = índice da peça; pode chegar fora de ordem */
+      carregar(i, imT, imF) { PS[i] = [tex(imT, true), tex(imF, false)]; },
+      pronta: i => !!PS[i],
+      quadro(t, i, al) {
+        i = i || 0; if (!PS[i]) return false;
+        const T = PS[i][0], F = PS[i][1];
         const r = cv.getBoundingClientRect(), dpr = Math.min(devicePixelRatio || 1, 2);
         const w = Math.round(r.width * dpr), h = Math.round(r.height * dpr);
         if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
@@ -82,10 +85,19 @@
         gl.useProgram(P);
         gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, T); gl.uniform1i(U('uT'), 0);
         gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, F); gl.uniform1i(U('uF'), 1);
-        gl.uniform1f(U('uTm'), t); gl.uniform2f(U('uRes'), w, h);
+        gl.uniform1f(U('uTm'), t); gl.uniform1f(U('uAl'), al == null ? 1 : al); gl.uniform2f(U('uRes'), w, h);
         gl.bindVertexArray(vao); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+        return true;
       }
     };
   };
   window.sombreadoDur = 2.6;
+  window.sombreadoCiclo = 5.6;   /* peça fecha em 1,6 s, fica à vista, some em .4 s */
+  window.sombreadoPecas = [['miguel', 'São Miguel Arcanjo · braço'], ['leoa', 'Leoa e cria · braço'], ['catrina', 'Catrina · braço'], ['lobo', 'Lobo · perna'], ['senna', 'Ayrton Senna · perna']];
+  /* tempo global -> peça, tempo local e opacidade */
+  window.sombreadoEm = function (T) {
+    const C = window.sombreadoCiclo, N = window.sombreadoPecas.length;
+    const k = Math.floor(T / C), t = T - k * C;
+    return { i: k % N, t: Math.min(t, window.sombreadoDur), al: Math.min(1, Math.max(0, (C - t) / .4)), fim: t > 1.8 && t < C - .35 };
+  };
 })();
